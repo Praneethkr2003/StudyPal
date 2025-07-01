@@ -1,0 +1,35 @@
+[tool.poetry]
+name = "studypal-ai"
+version = "0.1.0"
+description = "An intelligent Telegram bot for academic Q&A, PDF indexing, and YouTube video recommendations using ChromaDB."
+authors = ["Praneeth <apraneethkumar2k@gmail.com>"]
+license = "MIT"
+readme = "README.md"
+package-mode = false
+
+[tool.poetry.dependencies]
+python = "^3.10"
+python-telegram-bot = "^20.8"
+chromadb = "^0.4.13"
+pypdf = "^3.17.1"  # Note: The package is named 'pypdf' on PyPI, not 'PyPDF2'
+numpy = "<2.0.0"  # Required for ChromaDB compatibility
+sentence-transformers = "^2.2.2"
+PyYAML = "^6.0.1"
+httpx = ">=0.26.0,<0.27.0"  # Pinned to work with python-telegram-bot 20.8
+
+
+# Google API
+google-api-python-client = "^2.108.0"
+youtube-search = "^2.1.0"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.group.dev.dependencies]
+black = "*"
+isort = "*"
+mypy = "*"
+
+
+
