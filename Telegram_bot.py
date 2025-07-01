@@ -173,25 +173,24 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
-# Load environment variables from .env file
-env_path = Path('.') / '.env'
-logger.info(f"Loading environment from: {env_path.absolute()}")
-
-# Check if .env file exists
-if not env_path.exists():
-    logger.error(f"No .env file found at {env_path.absolute()}. Please create one.")
-    raise FileNotFoundError(f"No .env file found at {env_path.absolute()}")
-
 # Load environment variables
-load_dotenv(dotenv_path=env_path, override=True)
+logger = logging.getLogger(__name__)
+
+# Load .env only if the file exists (for local dev)
+env_path = os.path.join(os.path.dirname(__file__), '.env')
+if os.path.exists(env_path):
+    load_dotenv(dotenv_path=env_path, override=True)
+    logger.info("✅ Loaded .env file.")
+else:
+    logger.warning("⚠️ .env file not found. Using environment variables from system.")
 
 # Debug: Print all environment variables (except sensitive ones)
 logger.info("Environment variables loaded. Available keys:")
 for k, v in os.environ.items():
     if 'key' not in k.lower() and 'token' not in k.lower() and 'secret' not in k.lower():
-        logger.info(f"  {k} = {'*' * len(v) if v else ''}")
+        logger.info(f"  {k} = {v}")
     else:
-        logger.info(f"  {k} = {'*' * min(8, len(v)) if v else ''}")
+        logger.info(f"  {k} = {'*' * min(8, len(v) or 0)}")
 
 # Get configuration from environment variables or use defaults
 TELEGRAM_TOKEN = os.getenv('TELEGRAM_TOKEN')
@@ -243,21 +242,6 @@ def split_message(text: str, max_length: int = 4000) -> list[str]:
         text = text[split_at:].strip()
     
     return chunks
-from dotenv import load_dotenv
-
-# Load environment variables from .env file
-load_dotenv()
-
-# Configuration
-TOKEN = "7675636415:AAGsPmDCIudLwnXcXQKAzJiyiDf6Eqf3kZ8"  # Your bot token
-PDF_SAVE_DIR = "data/"
-GOOGLE_API_KEY = os.getenv('GOOGLE_API_KEY')  # Get API key from environment variable
-
-# Ensure directories exist
-os.makedirs(PDF_SAVE_DIR, exist_ok=True)
-
-# Handle PDF upload is now handled by handle_document function
-
 # Handle text query
 async def handle_query(update: Update, context: ContextTypes.DEFAULT_TYPE):
     print(f"DEBUG: Received query: {update.message.text}")
