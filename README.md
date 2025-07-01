@@ -142,6 +142,11 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 
 For questions or support, please contact [praneeth](mailto:apraneethkumar2k@gmail.com)
 
+
+## Workflow
+
+![Image](https://github.com/user-attachments/assets/88da75c4-9dab-411a-8a35-7095cf403568)
+
 ---
 
 <div align="center">
